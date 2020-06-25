@@ -1,8 +1,7 @@
 from PIL import ImageGrab, ImageOps
-import pyautogui 
-import time 
-import numpy as np   
-
+import pyautogui
+import time
+import numpy as np
 
 
 class colors():
@@ -12,20 +11,23 @@ class colors():
     blue = (0, 0, 255)
 
 class boxs():
-    # coordinates of black box of surfer
+    # coordinates of the black box of the surfer
     black_box = (467, 462, 493, 488)
 
-    # coordinates of box around surfer
+    # coordinates of the box around the surfer
     box_around_surfer = (243, 371, 718, 584)
 
-    # coordinates of box behind surfer (to avoid monster or other surfers)
-    box_behind = (389, 374, 574, 462)
+    # coordinates of the box behind the surfer (to avoid monster or other surfers)
+    box_behind = (431, 374, 535, 462)
 
-    # coordinates of left box of the surfer
-    box_left = (244, 489, 467, 586)
+    # coordinates of the left box of the surfer
+    box_left = (264, 490, 435, 586)
 
-    # coordinates ofright box of the surfer
-    box_right = (495, 489, 718, 586)
+    # coordinates of the right box of the surfer
+    box_right = (426, 490, 700, 586)
+
+    # coordinates of the box front of the surfer
+    box_front = (441, 490, 516, 586)
 
 def restartGame(): 
     # press spacebar to restart game 
@@ -52,6 +54,10 @@ def reset():
     pyautogui.keyDown('down')
     pyautogui.keyUp('down')
 
+def standBy():
+    pyautogui.keyDown('up')
+    pyautogui.keyUp('up')
+
 def imageGrab():  
     # grabbing all the pixels values in form of RGB tupples
     # box behind  
@@ -66,7 +72,11 @@ def imageGrab():
     image = ImageGrab.grab(boxs.box_right)
     colors_right = image.getcolors(image.size[0] * image.size[1])
 
-    return (colors_left, colors_right, colors_behind)
+    # front box
+    image = ImageGrab.grab(boxs.box_front)
+    colors_front = image.getcolors(image.size[0] * image.size[1])
+
+    return (colors_left, colors_right, colors_behind, colors_front)
 
 def numberToColor():
     red = 0
@@ -76,11 +86,13 @@ def numberToColor():
     left = ()
     right = ()
     behind = ()
+    front = ()
 
     colors = imageGrab()
 
-    for i in range(3):
+    for i in range(4):
         for color in colors[i]:
+            #print(color)
             if (color[1][0] == 255 and color[1][1] == 0 and color[1][2] == 0):
                 red += color[0]
             elif (color[1][0] == 0 and color[1][1] == 255 and color[1][2] == 0):
@@ -92,8 +104,10 @@ def numberToColor():
             left = (red, green, black)
         elif (i == 1):
             right = (red, green, black)
-        else:
-            behind = (red, green, black)
+        elif (i == 2):
+            behind = black
+        elif (i == 3):
+            front = (red, green, black)
         
         red = 0
         green = 0
@@ -102,7 +116,7 @@ def numberToColor():
 
     #print("RED:" + str(red) + " " + "GREEN:" + str(green) + " " + "BLUE:" + str(blue) + " " + "BLACK:" + str(black))
 
-    return (left, right, behind)
+    return (left, right, behind, front)
 
 
 def decisions():
@@ -110,18 +124,85 @@ def decisions():
 
     print(datas)
 
-    if (datas[2][2] >= 700 and datas[2][2] <= 800): # [behind][black]
+    if (datas[2] >= 200):
+        reset()
+
+    if (datas[2] >= 700): # [behind][black]
         energy()
 
-    if (datas[0][2] >= 200): # [left][black]
-        turnRight()
-
-    if (datas[1][2] >= 200): # [right][black]
+    if (datas[3][2] >= 200): # [front][black]
+        standBy()
+        turnLeft()
+        turnLeft()
         turnLeft()
     
+    if (datas[0][2] >= 200 and datas[1][2] >= 200 and datas[3][2] >= 200): # [left][black] and [right][black] and [front][black]
+        turnLeft()
+        turnLeft()
+        turnLeft()
+
+    if (datas[0][2] >= 200): # [left][black]
+        if (datas[0][2] >= 200 and datas[3][2] >= 200): # [left][black] and [front][black]
+            turnRight()
+            turnRight()
+            turnRight()
+            turnRight()
+        elif (datas[0][2] >= 200 and datas[1][2] >= 200): # [left][black] and [right][black]
+            reset()
+        else:
+            turnRight()
+        
+    if (datas[1][2] >= 200): # [right][black]
+        if (datas[1][2] >= 200 and datas[3][2] >= 200): # [right][black] and [front][black]
+            turnLeft()
+            turnLeft()
+            turnLeft()
+            turnLeft()
+        elif (datas[1][2] >= 200 and datas[0][2] >= 200): # [right][black] and [left][black]
+            reset()
+        else:
+            turnLeft()
+
+    if (datas[0][1] >= 200 and datas[1][1] >= 200): # [left][green] and # [right][green]
+        turnLeft()
+        turnLeft()
+        turnLeft()
+
+    if (datas[0][1] >= 200): # [left][green]
+        turnLeft()
+
+    if (datas[1][1] >= 200): # [right][green]
+        turnRight()
+
+    if (datas[0][2] >= 200 and datas[1][2] >= 200 and datas[3][1] >= 300): # [left][black] and # [right][black] and # [front][green]
+        reset()
+        reset()
+        reset()
+
+    if (datas[0][2] >= 200 and datas[0][1] >= 300): # [left][black] and # [left][green]
+        turnLeft()
+        turnLeft()
+        reset()
+    
+    if (datas[1][2] >= 200 and datas[1][1] >= 300): # [right][black] and # [right][green]
+        turnRight()
+        turnRight()
+        reset()
+    
+    if (datas[0][2] >= 200 and datas[3][1] >= 200): # [left][black] and # [front][green]
+        turnRight()
+        turnRight()
+        reset()
+        reset()
+    
+    if (datas[1][2] >= 200 and datas[3][1] >= 200): # [right][black] and # [front][green]
+        turnLeft()
+        turnLeft()
+        reset()
+        reset()
+        
 
 time.sleep(2)
 restartGame()
 while True:
     decisions()
-    time.sleep(0.1)
