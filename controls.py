@@ -1,13 +1,21 @@
 import pyautogui
 import time
 
+from datas import timeToEnergy, lastControl
+
+timeStart = time.time()
+
 def energy():
+
     # take a energy boost to avoid monster for example
-    pyautogui.keyDown('down')
-    pyautogui.keyUp('down')
-    time.sleep(0.1)
-    pyautogui.keyDown('down')
-    pyautogui.keyUp('down')
+    if (time.time() - timeStart > timeToEnergy):
+        print("TURBO !!")
+        pyautogui.keyDown('down')
+        pyautogui.keyUp('down')
+        pyautogui.keyDown('down')
+        pyautogui.keyUp('down')
+
+        lastControl = 'down'
 
 def turnLeft():
 
@@ -15,11 +23,15 @@ def turnLeft():
     pyautogui.keyDown('left')
     pyautogui.keyUp('left')
 
+    lastControl = 'left'
+
 def turnRight():
 
     # turn right
     pyautogui.keyDown('right')
     pyautogui.keyUp('right')
+
+    lastControl = 'right'
 
 def reset():
 
@@ -27,11 +39,15 @@ def reset():
     pyautogui.keyDown('down')
     pyautogui.keyUp('down')
 
+    lastControl = 'down'
+
 def standBy():
 
     # take a pause
     pyautogui.keyDown('up')
     pyautogui.keyUp('up')
+
+    lastControl = 'up'
 
 def restartGame():
 
@@ -39,3 +55,9 @@ def restartGame():
     pyautogui.keyDown('space')
     time.sleep(0.5)
     pyautogui.keyUp('space')
+
+def control():
+
+    # use the last control
+    pyautogui.keyDown(lastControl)
+    pyautogui.keyUp(lastControl)

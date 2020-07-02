@@ -1,6 +1,7 @@
 from PIL import ImageGrab, ImageOps
 
-from datas import boxs, colors
+from datas import boxs
+from datas import colors as c
 
 def imageGrab():  
 
@@ -21,7 +22,15 @@ def imageGrab():
     image = ImageGrab.grab(boxs.box_front)
     colors_front = image.getcolors(image.size[0] * image.size[1])
 
-    return (colors_left, colors_right, colors_behind, colors_front)
+    # snipe box
+    image = ImageGrab.grab(boxs.box_snipe)
+    colors_snipe = image.getcolors(image.size[0] * image.size[1])
+    
+    # energy box
+    image = ImageGrab.grab(boxs.box_energy)
+    colors_energy = image.getcolors(image.size[0] * image.size[1])
+
+    return (colors_left, colors_right, colors_behind, colors_front, colors_snipe, colors_energy)
 
 def numberToColor():
 
@@ -29,15 +38,19 @@ def numberToColor():
     red = 0
     green = 0
     black = 0
+    sand = 0
+    energyColor = 0
 
     left = ()
     right = ()
     behind = ()
     front = ()
+    snipe = ()
+    energy = ()
 
     colors = imageGrab()
 
-    for i in range(4):
+    for i in range(6):
         for color in colors[i]:
             #print(color)
             if (color[1][0] == 255 and color[1][1] == 0 and color[1][2] == 0):
@@ -46,6 +59,10 @@ def numberToColor():
                 green += color[0]
             elif (color[1][0] == 0 and color[1][1] == 0 and color[1][2] == 0):
                 black += color[0]
+            elif (color[1][0] == 211 and color[1][1] == 230 and color[1][2] == 201):
+                sand += color[0]
+            elif (color[1][1] == 255):
+                energyColor += color[0]
 
         if (i == 0):
             left = (red, green, black)
@@ -55,11 +72,18 @@ def numberToColor():
             behind = black
         elif (i == 3):
             front = (red, green, black)
+        elif (i == 4):
+            snipe = (sand, black)
+        elif (i == 5):
+            energy = energyColor
+
         
         red = 0
         green = 0
         black = 0
+        sand = 0
+        energyColor = 0
 
-    #print("RED:" + str(red) + " " + "GREEN:" + str(green) + " " + "BLUE:" + str(blue) + " " + "BLACK:" + str(black))
+    # print("RED:" + str(red) + " " + "GREEN:" + str(green) + " " + "BLACK:" + str(black) + " " + "SAND:" + str(sandcolor))
 
-    return (left, right, behind, front)
+    return (left, right, behind, front, snipe, energy)
