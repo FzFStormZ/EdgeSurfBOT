@@ -22,7 +22,8 @@ class boxs():
     box_around_surfer = (243, 371, 718, 584)
 
     # coordinates of the box behind the surfer (to avoid monster or other surfers)
-    box_behind = (431, 374, 535, 462)
+    # box_behind = (431, 374, 535, 462) --> old coordinates
+    box_behind = (380, 365, 580, 455)
 
     # coordinates of the left box of the surfer
     # box_left = (264, 490, 435, 586) --> old coordinates
