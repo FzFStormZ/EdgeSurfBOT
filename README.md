@@ -8,16 +8,16 @@ EdgeSurfBOT is a little project based on the game "surf" of the Edge browser.
 
 ## How works ❔
 
-First, my code based on the **High visibility mode** which allow to see rectangles around each objects on the game.
-With that, I can know if the surfer going to an obstacle, a boost or whatever in the game.
-To detect obstacles, I build rectangles around the surfer to take decision in function of what is in each rectangles:
+First, my code based on the **High visibility mode** which allows seeing rectangles around each object on the game.
+After that, I can know if the surfer going to an obstacle, a boost or anything in the game.
+To detect objects, I build rectangles around the surfer to decide on what the surfer doing to what is in each rectangle:
 
 <img src=imgs/ExplanationREADME.PNG width="550px" height="600px" alt="My rectangles"/>
 
-In this game, we have color code which is:
+In this game, we have a colour code which are:
 * **Black objects**: They are dangerous for the surfer. They stop him and he loses 1 ❤️.
 * **Red objects**: They aren't dangerous but slow down the surfer.
-* **Green ojects**: They allow to take a ⚡ boost or a springboard in goal to gain a speed boost.
+* **Green objects**: They allow to take a ⚡ boost or a springboard in goal to gain a speed boost.
 
 
 ## Requirements
@@ -50,10 +50,10 @@ In this game, we have color code which is:
 
     _Explain:_
     + **Let's surf** : Principal game mode
-    + **High visibility mode** allow to see rectangles around each objects on the game
-    + **Reduced speed mode** allow to take decision easier
+    + **High visibility mode** allows seeing rectangles around each object on the game
+    + **Reduced speed mode** allows taking decision easier
 
-4. ⚠️ __WARNING__ ⚠️ Split your screen between the browser and your CMD such as :
+4. ⚠️ __WARNING__ ⚠️ Split your screen between the browser and your CMD such as:
 
     <img src=imgs/ExampleStartProject.PNG width="700px" height="400px" alt="How to run a game"/>
 
@@ -66,7 +66,7 @@ List of versions : [Click to show them](https://github.com/FzFStormZ/EdgeSurfBOT
 
 * Detect red obstacles.
 * Box to find quickly a boost (after 1000 meters).
-* Fix the fact that the surfer not continue after down by black object.
+* Fix the fact that the surfer doesn't continue after down by black object.
 * Decisional conditions to machine learning (after a complete decisional conditions project).
 
 ## Authors
