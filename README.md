@@ -12,7 +12,7 @@ First, my code based on the **High visibility mode** which allow to see rectangl
 With that, I can know if the surfer going to an obstacle, a boost or whatever in the game.
 To detect obstacles, I build rectangles around the surfer to take decision in function of what is in each rectangles:
 
-<img src=imgs/ExplanationREADME.png width="550px" height="600px" alt="My rectangles"/>
+<img src=imgs/ExplanationREADME.PNG width="550px" height="600px" alt="My rectangles"/>
 
 In this game, we have color code which is:
 * **Black objects**: They are dangerous for the surfer. They stop him and he loses 1 ❤️.
@@ -51,7 +51,7 @@ In this game, we have color code which is:
     _Explain:_
     + **Let's surf** : Principal game mode
     + **High visibility mode** allow to see rectangles around each objects on the game
-    + **Reduced speed mode** allow to take decision more easily
+    + **Reduced speed mode** allow to take decision easier
 
 4. ⚠️ __WARNING__ ⚠️ Split your screen between the browser and your CMD such as :
 
