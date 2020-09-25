@@ -8,7 +8,7 @@ EdgeSurfBOT is a little project based on the game "surf" of the Edge browser.
 
 ## How works ❔
 
-First, my code based on the **High visibility mode** which allows seeing rectangles around each object on the game.
+First, my code is based on the **High visibility mode** which allows seeing rectangles around each object on the game.
 After that, I can know if the surfer going to an obstacle, a boost or anything in the game.
 To detect objects, I build rectangles around the surfer to decide on what the surfer doing to what is in each rectangle:
 
